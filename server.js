@@ -1,21 +1,9 @@
 
 /*
-Questo codice crea un servizio backend in Node.js con il framework Express per gestire richieste HTTP. Il servizio interagisce con l'API "The Cocktail DB" e permette di cercare cocktail in base alla prima lettera del nome.
-
-Inizialmente, il codice importa le dipendenze necessarie, ovvero il framework Express e la libreria Axios, che permette di effettuare richieste HTTP. 
-
-Viene quindi creato un'istanza di Express, che verrà usata per gestire le richieste in entrata. Viene anche assegnata una porta (3000) su cui il servizio ascolterà le richieste.
-
-Successivamente, viene definito un endpoint per la ricerca dei cocktail in base alla prima lettera del nome. L'endpoint è definito come una funzione che viene eseguita quando viene ricevuta una richiesta GET a '/cocktails/:letter'. Il parametro 'letter' viene estratto dalla richiesta (req.params) e viene usato per costruire l'URL dell'API di The Cocktail DB.
-
-Viene quindi effettuata una richiesta HTTP GET all'URL dell'API usando Axios. Quando la risposta è disponibile, i dati dei cocktail vengono estratti e restituiti come risposta in formato JSON. 
-
-Se si verifica un errore durante la richiesta HTTP, viene stampato un messaggio di errore nella console e viene restituito uno status code 500 al client.
-
 In sintesi, il codice crea un servizio backend per gestire richieste HTTP in Node.js e usa il framework Express per definire degli endpoint che interagiscono con l'API The Cocktail DB tramite la libreria Axios.
 
+The code creates a backend service to handle HTTP requests in Node.js and uses the Express framework to define endpoints that interact with The Cocktail DB API via the Axios library.
 */ 
-
 
 const express = require('express');
 const axios = require('axios');
@@ -23,8 +11,8 @@ const axios = require('axios');
 const app = express();
 const port = 3000;
 
-// Endpoint per cercare un cocktail dato la prima lettera
-/* http://localhost:3000/cocktails/m */
+/* Endpoint to search for a cocktail given the first letter
+   http://localhost:3000/cocktails/search/letter/:letter */
 app.get('/cocktails/search/letter/:letter', (req, res) => {
   const { letter } = req.params;
   const url = `https://www.thecocktaildb.com/api/json/v1/1/search.php?f=${letter}`;
@@ -40,11 +28,8 @@ app.get('/cocktails/search/letter/:letter', (req, res) => {
     });
 });
 
-
-/* modo alternativo: 
-http://localhost:3000/cocktails/search/m
-
-// Endpoint per cercare un cocktail dato la prima lettera
+/* alternative way:
+// Endpoint to search for a cocktail given the first letter
 app.get('/cocktails/search/:letter', async (req, res) => {
   try {
     const { letter } = req.params;
@@ -57,8 +42,7 @@ app.get('/cocktails/search/:letter', async (req, res) => {
 });
 */
 
-
-// Endpoint per recuperare i dettagli del singolo cocktail dato il nome
+// Endpoint to retrieve the details of the single cocktail given the name
 app.get('/cocktails/search/name/:name', (req, res) => {
   const { name } = req.params;
   const url = `https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${name}`;
@@ -73,8 +57,7 @@ app.get('/cocktails/search/name/:name', (req, res) => {
     });
 });
 
-
-// Endpoint per recuperare i dettagli del singolo cocktail dato l'ID
+// Endpoint to retrieve the details of the single cocktail given the ID
 app.get('/cocktails/search/id/:id', async (req, res) => {
   try {
     const { id } = req.params;
@@ -86,8 +69,7 @@ app.get('/cocktails/search/id/:id', async (req, res) => {
   }
 });
 
-
-// endpoint for random drink  
+// Endpoint for lookup a random cocktail
 app.get('/cocktails/search/random', (req, res) => {
   const url = 'https://www.thecocktaildb.com/api/json/v1/1/random.php';
 
@@ -106,8 +88,7 @@ app.get('/cocktails/search/random', (req, res) => {
     });
 });
 
-
-/* // versione alternativa a sopra
+/* // alternative way:
 app.get('/cocktails/random', async (req, res) => {
   const url = 'https://www.thecocktaildb.com/api/json/v1/1/random.php';
 
@@ -124,9 +105,7 @@ app.get('/cocktails/random', async (req, res) => {
     }
 });
 */
-
-
-
+   
 app.listen(port, () => {
   console.log(`Server listening on port ${port}`);
 });
